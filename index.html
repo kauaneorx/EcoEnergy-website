@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoEnergy - Economize Energia, Salve o Planeta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eco-green': '#059669',
+                        'eco-dark': '#047857',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        <span class="ml-2 text-2xl font-bold text-green-600">EcoEnergy</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-gray-700 hover:text-green-600 px-3 py-2 font-medium transition">Início</a>
+                    <a href="#calculadora" class="text-gray-700 hover:text-green-600 px-3 py-2 font-medium transition">Calculadora</a>
+                    <a href="#dicas" class="text-gray-700 hover:text-green-600 px-3 py-2 font-medium transition">Dicas</a>
+                    <a href="#sobre" class="text-gray-700 hover:text-green-600 px-3 py-2 font-medium transition">Sobre</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#inicio" class="block px-3 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-md font-medium">Início</a>
+                <a href="#calculadora" class="block px-3 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-md font-medium">Calculadora</a>
+                <a href="#dicas" class="block px-3 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-md font-medium">Dicas</a>
+                <a href="#sobre" class="block px-3 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-md font-medium">Sobre</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="pt-24 pb-16 bg-gradient-to-br from-green-500 to-green-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Economize Energia,<br>Salve o Planeta
+            </h1>
+            <p class="text-xl text-green-50 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Calcule seu consumo energético e descubra como reduzir custos enquanto protege o meio ambiente
+            </p>
+            <a href="#calculadora" class="inline-block bg-white text-green-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-50 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                Começar Agora
+            </a>
+        </div>
+    </section>
+
+    <!-- Calculadora Section -->
+    <section id="calculadora" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Calculadora de Consumo</h2>
+                <p class="text-lg text-gray-600 leading-relaxed">Selecione seus eletrodomésticos e descubra quanto você gasta</p>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl shadow-lg p-6 sm:p-8">
+                <div id="appliances-container" class="space-y-4 mb-6">
+                    <!-- Appliance items will be added here by JavaScript -->
+                </div>
+
+                <button id="add-appliance" class="w-full bg-green-100 text-green-700 py-3 rounded-lg font-medium hover:bg-green-200 transition mb-6">
+                    + Adicionar Eletrodoméstico
+                </button>
+
+                <div class="bg-white rounded-lg p-4 mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tarifa de Energia (R$/kWh)</label>
+                    <input type="number" id="tariff" value="0.85" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+
+                <button id="calculate" class="w-full bg-green-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-green-700 transition shadow-md hover:shadow-lg">
+                    Calcular Consumo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resultados Section -->
+    <section id="resultados" class="py-16 bg-gray-50 hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Seus Resultados</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div class="text-green-600 mb-2">
+                        <svg class="h-12 w-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Consumo Mensal</h3>
+                    <p id="monthly-consumption" class="text-4xl font-bold text-green-600">0 kWh</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div class="text-green-600 mb-2">
+                        <svg class="h-12 w-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Custo Mensal</h3>
+                    <p id="monthly-cost" class="text-4xl font-bold text-green-600">R$ 0,00</p>
+                </div>
+            </div>
+
+            <div id="tips-container" class="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Dicas de Economia</h3>
+                <div id="tips-list" class="space-y-3">
+                    <!-- Tips will be added here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dicas Section -->
+    <section id="dicas" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Dicas de Economia</h2>
+                <p class="text-lg text-gray-600 leading-relaxed">Pequenas mudanças que fazem grande diferença</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-green-50 rounded-xl p-6 hover:shadow-lg transition">
+                    <div class="text-green-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Iluminação LED</h3>
+                    <p class="text-gray-600 leading-relaxed">Troque lâmpadas incandescentes por LED e economize até 80% de energia</p>
+                </div>
+
+                <div class="bg-green-50 rounded-xl p-6 hover:shadow-lg transition">
+                    <div class="text-green-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ar Condicionado</h3>
+                    <p class="text-gray-600 leading-relaxed">Mantenha a temperatura em 23°C e limpe os filtros regularmente</p>
+                </div>
+
+                <div class="bg-green-50 rounded-xl p-6 hover:shadow-lg transition">
+                    <div class="text-green-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Desligue da Tomada</h3>
+                    <p class="text-gray-600 leading-relaxed">Tire aparelhos da tomada quando não usar. O modo stand-by consome energia!</p>
+                </div>
+
+                <div class="bg-green-50 rounded-xl p-6 hover:shadow-lg transition">
+                    <div class="text-green-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Geladeira Eficiente</h3>
+                    <p class="text-gray-600 leading-relaxed">Não abra a porta à toa, verifique as borrachas de vedação e descongele regularmente</p>
+                </div>
+
+                <div class="bg-green-50 rounded-xl p-6 hover:shadow-lg transition">
+                    <div class="text-green-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Banhos Curtos</h3>
+                    <p class="text-gray-600 leading-relaxed">Reduza o tempo de banho para 5-8 minutos. O chuveiro é um dos maiores vilões da conta</p>
+                </div>
+
+                <div class="bg-green-50 rounded-xl p-6 hover:shadow-lg transition">
+                    <div class="text-green-600 mb-4">
+                        <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Luz Natural</h3>
+                    <p class="text-gray-600 leading-relaxed">Abra cortinas e janelas durante o dia. Aproveite a iluminação natural sempre que possível</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="py-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Sobre o EcoEnergy</h2>
+            <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                O EcoEnergy é uma plataforma educacional desenvolvida para conscientizar sobre o consumo responsável de energia elétrica. 
+                Nossa missão é ajudar pessoas e empresas a reduzirem seus gastos energéticos enquanto contribuem para um planeta mais sustentável.
+            </p>
+            <p class="text-lg text-gray-600 leading-relaxed">
+                Através de ferramentas simples e educativas, buscamos transformar a forma como você consome energia no dia a dia.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-700 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <span class="ml-2 text-2xl font-bold">EcoEnergy</span>
+                </div>
+                <p class="text-green-100 mb-2">Desenvolvido com 💚 pela</p>
+                <p class="text-xl font-semibold mb-4">EETEPA Oriximiná</p>
+                <p class="text-green-200 text-sm">© 2025 EcoEnergy. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Appliances database with average power consumption
+        const appliancesDB = [
+            { name: 'Geladeira', power: 150 },
+            { name: 'Ar Condicionado', power: 1500 },
+            { name: 'Chuveiro Elétrico', power: 5500 },
+            { name: 'Televisão', power: 100 },
+            { name: 'Computador', power: 200 },
+            { name: 'Máquina de Lavar', power: 500 },
+            { name: 'Ferro de Passar', power: 1000 },
+            { name: 'Micro-ondas', power: 1200 },
+            { name: 'Ventilador', power: 100 },
+            { name: 'Lâmpada LED', power: 10 }
+        ];
+
+        let applianceCount = 0;
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Add initial appliance
+        addAppliance();
+
+        // Add appliance button
+        document.getElementById('add-appliance').addEventListener('click', addAppliance);
+
+        function addAppliance() {
+            applianceCount++;
+            const container = document.getElementById('appliances-container');
+            
+            const applianceDiv = document.createElement('div');
+            applianceDiv.className = 'bg-white rounded-lg p-4 shadow-sm border border-gray-200';
+            applianceDiv.id = `appliance-${applianceCount}`;
+            
+            applianceDiv.innerHTML = `
+                <div class="flex justify-between items-center mb-3">
+                    <h4 class="font-semibold text-gray-700">Eletrodoméstico ${applianceCount}</h4>
+                    <button onclick="removeAppliance(${applianceCount})" class="text-red-500 hover:text-red-700">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="grid sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Aparelho</label>
+                        <select class="appliance-select w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" onchange="updatePower(${applianceCount})">
+                            ${appliancesDB.map(app => `<option value="${app.power}">${app.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Potência (W)</label>
+                        <input type="number" class="appliance-power w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" value="${appliancesDB[0].power}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Horas/dia</label>
+                        <input type="number" class="appliance-hours w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" value="4" min="0" max="24" step="0.5">
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(applianceDiv);
+        }
+
+        function updatePower(id) {
+            const applianceDiv = document.getElementById(`appliance-${id}`);
+            const select = applianceDiv.querySelector('.appliance-select');
+            const powerInput = applianceDiv.querySelector('.appliance-power');
+            powerInput.value = select.value;
+        }
+
+        function removeAppliance(id) {
+            const applianceDiv = document.getElementById(`appliance-${id}`);
+            applianceDiv.remove();
+        }
+
+        // Calculate consumption
+        document.getElementById('calculate').addEventListener('click', function() {
+            const appliances = document.querySelectorAll('#appliances-container > div');
+            let totalConsumption = 0;
+
+            appliances.forEach(appliance => {
+                const power = parseFloat(appliance.querySelector('.appliance-power').value);
+                const hours = parseFloat(appliance.querySelector('.appliance-hours').value);
+                const dailyConsumption = (power * hours) / 1000; // Convert to kWh
+                const monthlyConsumption = dailyConsumption * 30;
+                totalConsumption += monthlyConsumption;
+            });
+
+            const tariff = parseFloat(document.getElementById('tariff').value);
+            const monthlyCost = totalConsumption * tariff;
+
+            // Display results
+            document.getElementById('monthly-consumption').textContent = `${totalConsumption.toFixed(2)} kWh`;
+            document.getElementById('monthly-cost').textContent = `R$ ${monthlyCost.toFixed(2)}`;
+
+            // Generate tips
+            generateTips(totalConsumption);
+
+            // Show results section
+            document.getElementById('resultados').classList.remove('hidden');
+            document.getElementById('resultados').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function generateTips(consumption) {
+            const tipsContainer = document.getElementById('tips-list');
+            tipsContainer.innerHTML = '';
+
+            const tips = [
+                { icon: '💡', text: 'Desligue aparelhos da tomada quando não estiver usando para evitar consumo fantasma' },
+                { icon: '🌡️', text: 'Use o ar condicionado com moderação e mantenha portas e janelas fechadas' },
+                { icon: '☀️', text: 'Aproveite a luz natural durante o dia e abra cortinas e persianas' },
+                { icon: '🔌', text: 'Invista em eletrodomésticos com selo Procel A de eficiência energética' },
+                { icon: '⏰', text: 'Use timer no chuveiro elétrico para controlar o tempo de banho' }
+            ];
+
+            if (consumption > 300) {
+                tips.unshift({ icon: '⚠️', text: 'Seu consumo está alto! Revise seus hábitos e considere trocar equipamentos antigos' });
+            } else if (consumption < 150) {
+                tips.unshift({ icon: '🎉', text: 'Parabéns! Seu consumo está abaixo da média. Continue assim!' });
+            }
+
+            tips.forEach(tip => {
+                const tipDiv = document.createElement('div');
+                tipDiv.className = 'flex items-start space-x-3 p-3 bg-green-50 rounded-lg';
+                tipDiv.innerHTML = `
+                    <span class="text-2xl">${tip.icon}</span>
+                    <p class="text-gray-700 leading-relaxed">${tip.text}</p>
+                `;
+                tipsContainer.appendChild(tipDiv);
+            });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
