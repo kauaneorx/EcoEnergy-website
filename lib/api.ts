@@ -1,10 +1,18 @@
-// Fetch wrapper com interceptor de token
-export async function apiFetch(url: string, options: RequestInit = {}) {
-  const token = localStorage.getItem("auth_token")
-
-  const headers = {
+// lib/api.ts
+export async function apiRequest(
+  url: string, 
+  options: RequestInit = {}, 
+  token?: string
+): Promise<any> {
+  // Inicializa headers como objeto string
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    ...options.headers,
+  }
+
+  if (options.headers) {
+    Object.entries(options.headers).forEach(([key, value]) => {
+      headers[key] = String(value)
+    })
   }
 
   if (token) {
@@ -13,15 +21,13 @@ export async function apiFetch(url: string, options: RequestInit = {}) {
 
   const response = await fetch(url, {
     ...options,
-    headers,
+    headers
   })
 
-  if (response.status === 401) {
-    // Token inválido ou expirado
-    localStorage.removeItem("auth_token")
-    window.location.href = "/login"
-    throw new Error("Sessão expirada")
+  if (!response.ok) {
+    const error = await response.text()
+    throw new Error(`API Error: ${response.status} - ${error}`)
   }
 
-  return response
+  return response.json()
 }
