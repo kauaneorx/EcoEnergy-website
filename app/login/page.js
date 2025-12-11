@@ -1,9 +1,13 @@
 export default function LoginPage() {
+  const handleClick = () => alert('✅ Login mock - API funcionando!')
+  
   return (
-    <div style={{ padding: '50px', textAlign: 'center' }}>
-      <h1>Página de Login</h1>
-      <p>Esta página agora existe!</p>
-      <p>Acesse: <a href="/api/auth/login">/api/auth/login</a> para a API</p>
+    <div style={{ padding: '40px' }}>
+      <h1>Login EcoEnergy</h1>
+      <p>Clique para testar a API de login</p>
+      <button onClick={handleClick} style={{ padding: '10px 20px' }}>
+        Testar Login
+      </button>
     </div>
   )
 }

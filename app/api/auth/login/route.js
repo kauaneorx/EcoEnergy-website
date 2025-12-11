@@ -1,10 +1,9 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
-export async function POST(request) {
-  const body = await request.json()
+export async function POST() {
   return NextResponse.json({
     success: true,
-    message: "Login funcionando!",
-    user: { name: "Usuário Teste", email: body.email }
+    message: 'API funcionando!',
+    user: { name: 'Usuário Teste', email: 'test@test.com' }
   })
 }
