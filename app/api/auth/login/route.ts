@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server"
 import { UserDB } from "@/lib/db"
 
-export async function POST(request: Request) {
+export const dynamic = 'force-dynamic'
+
+export async function POST(request: Request): Promise<NextResponse> {
   try {
     const body = await request.json()
 
@@ -11,7 +13,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Email/telefone e senha são obrigatórios" }, { status: 400 })
     }
 
-    const user = UserDB.getByEmailOrPhone(emailOrPhone)
+    const user = await UserDB.getByEmailOrPhone(emailOrPhone)
 
     if (!user || user.password !== password) {
       return NextResponse.json({ error: "Credenciais incorretas" }, { status: 401 })
@@ -38,7 +40,8 @@ export async function POST(request: Request) {
     })
 
     return response
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error("[login] error:", error)
     return NextResponse.json({ error: "Erro ao processar login" }, { status: 500 })
   }
 }
