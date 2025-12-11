@@ -1,27 +1,31 @@
 // lib/api.ts
 export async function apiRequest(
-  url: string, 
-  options: RequestInit = {}, 
+  url: string,
+  options: RequestInit = {},
   token?: string
 ): Promise<any> {
-  // Inicializa headers como objeto string
+  // Cria headers como objeto seguro
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   }
 
+  // headers das opções
   if (options.headers) {
-    Object.entries(options.headers).forEach(([key, value]) => {
-      headers[key] = String(value)
-    })
+    const optionHeaders = options.headers as Record<string, string>
+    for (const [key, value] of Object.entries(optionHeaders)) {
+      headers[key] = value
+    }
   }
 
+  //Authorization token
   if (token) {
     headers["Authorization"] = `Bearer ${token}`
   }
 
+  //requisição
   const response = await fetch(url, {
     ...options,
-    headers
+    headers,
   })
 
   if (!response.ok) {
